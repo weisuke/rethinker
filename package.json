@@ -1,6 +1,6 @@
 {
   "name": "rethinker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ActiveRecord-like API service layer for RethinkDB",
   "main": "index.js",
   "scripts": {
