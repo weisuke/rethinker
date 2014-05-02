@@ -1,0 +1,35 @@
+{
+  "name": "rethinker",
+  "version": "0.0.0",
+  "description": "ActiveRecord-like API service layer for RethinkDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/weisuke/rethinker.git"
+  },
+  "keywords": [
+    "rethinkdb",
+    "active-record",
+    "AR",
+    "join",
+    "nested-join"
+  ],
+  "author": "Wei",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/weisuke/rethinker/issues"
+  },
+  "homepage": "https://github.com/weisuke/rethinker",
+  "dependencies": {
+    "rethinkdb": "^1.12.0-0",
+    "lodash": "^2.4.1",
+    "bluebird": "^1.2.4",
+    "generic-pool": "^2.0.4"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1"
+  }
+}
