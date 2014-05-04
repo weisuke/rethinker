@@ -413,7 +413,7 @@ Like instead of `coursesService.findAllCourse`, can't it just be `courses.findAl
 Sure thing, it's just my personal preference, when i'm refactoring, finding 'findAllCourse' usage is a lot more easier, and less error prone than just 'findAll', will consider to add an extra option for this.
 
 ##What version of RethinkDB supports?
-As RethinkDB hasn't reach the LTS release yet, use of latest version of RethinkDB is usually recommended.  
+As RethinkDB hasn't reach the LTS release yet, use of latest version of RethinkDB would be recommended.  
 
 
 
