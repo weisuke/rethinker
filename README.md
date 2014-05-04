@@ -398,7 +398,7 @@ var r = require('rethinkdb'),
 #Save relational data
 Coming soon
 
-Please referece the [test](https://github.com/weisuke/rethinker/blob/master/test/test.js) file for further usage.
+Please reference the [test](https://github.com/weisuke/rethinker/blob/master/test/test.js) file for further usage.
 
 #FAQ
 
@@ -408,7 +408,8 @@ Not quite, the main intend is to offer a wrapper around the official API, placin
 ##Does this offer validation layer?
 Personally i use the `validate` hook along with [express-validator](https://github.com/chriso/validator.js) library to validate the incoming data manually, might consider to add a validation layer in the future releases.
 
-##Can the API be simplified, like instead of `coursesService.findAllCourse`, it could just be `courses.findAll`
+##Can the API be simplified?
+Like instead of `coursesService.findAllCourse`, can't it just be `courses.findAll`?
 Sure thing, it's just my personal preference, when i'm refactoring, finding 'findAllCourse' usage is a lot more easier, and less error prone than just 'findAll', will consider to add an extra option for this.
 
 ##What version of RethinkDB supports?
