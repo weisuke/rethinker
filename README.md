@@ -20,7 +20,7 @@ And we would like to query the following:
 - All courses along with their private lectures, with video related datas if it's available
 - All students with email ending in '@institution.org', along with their enrolled courses
 
-##Initialize rethinker with database connection string
+##1. Initialize rethinker with database connection string
 
 ````javascript
 
@@ -40,7 +40,7 @@ var Rethinker = require('rethinker').init({
 ````
 
 
-##Initialize services
+##2. Initialize services
 
 ````javascript
 
@@ -50,7 +50,7 @@ var LecturesService = Rethinker.extend({
     relations: {
         hasOne: {
             course: {  //for simplicity, 'has one course' is the same as 'belongsTo a course'
-                on: 'courseId',
+                on: 'courseId', // attribute defined on the 'lectures' table
                 from: 'Course'
             },
             video: {
@@ -119,7 +119,7 @@ var lecturesService = new LecturesService(),
 
 ````
 
-##Querying datas
+##3. Querying datas
 
 #####All courses along with their private lectures ordered by createTime, with video related datas if it's available
 
@@ -339,12 +339,12 @@ CoursesService.prototype.existCourse([jsonData]) -> Promise
 
 #Extend default methods
 
-Each instance of Rethinker exposes the following attributes/method to allow building complex queries more easily:
+Each instance of Rethinker exposes the following attributes/methods that allow to build a complex queries more easily:
 
 - `r` : exposes the [rethinkdb API](http://www.rethinkdb.com/api/javascript/#r)
 - `table` : exposes the [table](http://www.rethinkdb.com/api/javascript/#table) instance, takes the this.tableName to initialize the `r.table(this.tableName)`
 - `db` : expose the DB instance with the [run](http://www.rethinkdb.com/api/javascript/#run) method
-- `buildQuery` : `` function buildQuery(queryCriteria, opts, tableName) -> Promise ``
+- `buildQuery` : ` function buildQuery(queryCriteria, opts, tableName) -> Promise `
 
 ````javascript
 
@@ -396,14 +396,93 @@ var r = require('rethinkdb'),
 ````
 
 #Save relational data
-Coming soon
 
-Please reference the [test](https://github.com/weisuke/rethinker/blob/master/test/test.js) file for further usage.
+Currently it only supports saving has-one relationships
+
+````javascript
+
+var BookingService = Rethinker.extend({
+      modelName : 'Booking',
+      relations : {
+        hasOne : {
+          activeOrder : {
+            on : 'bookingId',
+            from : 'Order',
+            filter : {
+              active : true
+            }
+            sync : true
+          },
+          completedOrder : {
+            on : 'bookingId',
+            from : 'Order',
+            filter : {
+              active : false,
+              completed : true
+            }
+            sync : 'readOnly'
+          }
+        }
+      }
+    });
+    
+    OrdersService = Rethinker.extend({
+      modelName : 'Order'
+    }
+})
+
+````
+
+The `sync` property in each `relation` declaration is used to specify whether or not to save those related data.
+When inserting the following data to the database:
+
+````
+
+var bookingService = new BookingService();
+bookingService.createBooking({
+  date : new Date(),
+  userId : req.user.id,
+  activeOrder : {
+    active : true,
+    completed : false
+  },
+  completedOrder : {
+    active : false,
+    completed : true
+  }
+});
+
+````
+
+It will generate the following data in 'booking' table and the 'orders' table:
+
+````javascript
+
+//booking table
+{
+  id : 'b0de0baa-5028-4da4-ae08-456b1c0d7239'
+  date : ...
+  userId : ..
+}
+
+//orders table
+{
+  id : ...
+  active : true,
+  completed : false,
+  bookingId : 'b0de0baa-5028-4da4-ae08-456b1c0d7239'
+}
+
+````
+
+Notice that in order to avoid data duplicity, the `activeOrder`, and `completedOrder` attributes are not saved in the booking table. Also in the orders table, only the `activeOrder` is saved since it has the property `sync : true`
+
+Please refer the [test](https://github.com/weisuke/rethinker/blob/master/test/test.js) file for further usage example of this option.
 
 #FAQ
 
 ##Is this an ORM?
-Not quite, the main intend is to offer a wrapper around the official API, placing the main emphasis on querying relational (nested relational) data with less code, it's basically a mixin that decorates methods in a class prototype chain. If you are looking for fully featured ORM solution, there are couple of alternatives: [Thinky](http://thinky.io/), [Reheat](http://reheat.codetrain.io/)
+Not quite so, the main intend is to offer a wrapper around the official API, placing the main emphasis on querying relational (nested relational) data with less code, it's basically a mixin that decorates methods in a class prototype chain. If you are looking for fully featured ORM solution, there are couple of alternatives: [Thinky](http://thinky.io/), [Reheat](http://reheat.codetrain.io/)
 
 ##Does this offer validation layer?
 Personally i use the `validate` hook along with [express-validator](https://github.com/chriso/validator.js) library to validate the incoming data manually, might consider to add a validation layer in the future releases.
