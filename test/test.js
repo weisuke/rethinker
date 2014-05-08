@@ -171,7 +171,7 @@ describe('Rethinker', function () {
 
     });
 
-    describe('testing createMethods', function () {
+    describe('testing create methods', function () {
 
         it('should create all models and their relationships', function (done) {
 
@@ -542,4 +542,22 @@ describe('Rethinker', function () {
         });
 
     })
+
+    describe('testing CRUD operations', function(){
+
+        it('should update all the students from inst1.edu with grade = 0', function(done){
+
+            studentsManager.updateAllStudent({grade : 0}, function(student){
+                return student('email').match('inst1.edu');
+            }).then(function(students){
+                expect(students.length).to.be.equal(2);
+                for (var i = 0, ll = students.length; i < ll; i++) {
+                  var student = students[i];
+                  expect(student.grade).to.be.equal(0);
+                }
+                done();
+            })
+        })
+
+    });
 })
