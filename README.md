@@ -286,6 +286,7 @@ coursesService.findAllCourse(null, { // find all the courses with enrolled stude
 
 ```
 CoursesService.prototype.updateCourse([jsonData, queryCriteria, options]) -> Promise
+CoursesService.prototype.updateAllCourse([jsonData, queryCriteria, options]) -> Promise
 ```
 
 The `jsonData` is the data to be updated, `queryCriteria` and `options` are the same ones described in [Retrieve section](#retrieve), with additional options: `validate`, `returnVals` described in the [Create section](#create)
@@ -299,8 +300,10 @@ videosService.updateVideo({url : "path/newName.mp4"}, '3e3a00a1-7d5c-4ed3-9a10-7
    // video : video json data with updated values
 })
 
-videosService.updateVideo({url : "path/newName.mp4"}, req.user.id, {index : 'userId'}) // update all user's videos 
-
+videosService.updateAllVideo({url : "path/newName.mp4"}, req.user.id, {index : 'userId'}) // update all user's videos 
+  .then(function(videos){
+    //returns an array of updated video values
+  })
 ````
 
 ###Delete
