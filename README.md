@@ -11,7 +11,7 @@ npm install rethinker
 
 #Running Tests
 
-Ensure that RethinkDB is [installed correctly](http://www.rethinkdb.com/docs/install/), and it's listening on port 28015. Then run the tests using
+Ensure that RethinkDB is [installed correctly](http://www.rethinkdb.com/docs/install/), and it's listening on port 28015. Then run the tests with
 
 ````
 npm test
