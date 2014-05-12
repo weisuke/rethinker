@@ -9,6 +9,14 @@ Rethinker offers a minimalist ActiveRecord-like API service layer for [RethinkDB
 npm install rethinker
 ````
 
+#Running Tests
+
+Ensure that RethinkDB is [installed correctly](http://www.rethinkdb.com/docs/install/), and it's listening on port 28015. Then run the tests using
+
+````
+npm test
+````
+
 #Getting started
 
 Let's assume we have the following entries and their relationships in our model:
