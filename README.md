@@ -25,7 +25,7 @@ A onlne course can be composed by many video lectures, which can be either be pu
 
 And we would like to query the following:
 
-- All courses along with their private lectures, with video related datas if it's available
+- All courses along with their private lectures, with video related data if it's available
 - All students with email ending in '@institution.org', along with their enrolled courses
 
 ##1. Initialize rethinker with database connection string
@@ -127,9 +127,9 @@ var lecturesService = new LecturesService(),
 
 ````
 
-##3. Querying datas
+##3. Querying data
 
-#####All courses along with their private lectures ordered by createTime, with video related datas if it's available
+#####All courses along with their private lectures ordered by createTime, with video related data if it's available
 
 ````
 
